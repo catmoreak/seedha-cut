@@ -10,9 +10,20 @@ type PageProps = {
 export default async function RedirectPage({ params }: PageProps) {
   const link = await prisma.link.findUnique({
     where: {
-      shortCode: params.shortCode,
+      shortCode: params.shortCode,  
     },
   });
+
+    if (link?.expiresAt && new Date() > new Date(link.expiresAt)) {
+
+  return (
+    <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <h1 className="text-3xl font-bold">
+        This link has expired.
+      </h1>
+    </div>
+  );
+
 
   if (!link) {
     return (
@@ -20,7 +31,7 @@ export default async function RedirectPage({ params }: PageProps) {
         <h1 className="text-3xl font-bold">404 - Link Not Found</h1>
       </div>
     );
-  }
-
+  } 
+    }
   redirect(link.originalUrl);
 }
