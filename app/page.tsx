@@ -200,7 +200,7 @@ export default function Home() {
                             type="text"
                             value={customSlug}
                             onChange={(e) => setCustomSlug(e.target.value)}
-                            placeholder="e.g. project-x"
+                            placeholder="e.g. linkshort"
                             className="w-full bg-transparent px-3 py-2.5 text-xs text-white placeholder-white/30 outline-none"
                           />
                         </div>
