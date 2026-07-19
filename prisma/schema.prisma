@@ -14,4 +14,17 @@ model Link {
   clicks      Int      @default(0)
   expiresAt   DateTime?
   createdAt   DateTime @default(now())
+
+  clickEvents Click[]
+}
+model Click {
+  id        String   @id @default(cuid())
+  linkId    String
+  visitorId String?
+  referrer  String?
+  device    String?
+  source    String?
+  createdAt DateTime @default(now())
+
+  link Link @relation(fields: [linkId], references: [id])
 }
