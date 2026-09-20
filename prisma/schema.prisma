@@ -13,18 +13,22 @@ model Link {
   shortCode   String   @unique
   clicks      Int      @default(0)
   expiresAt   DateTime?
+  launchAt    DateTime?
   createdAt   DateTime @default(now())
 
-  clickEvents Click[]
+  clickRecords Click[]
 }
+
 model Click {
-  id        String   @id @default(cuid())
-  linkId    String
-  visitorId String?
-  referrer  String?
-  device    String?
-  source    String?
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  linkId     String
+  visitorId  String?
+  referrer   String?
+  device     String?
+  source     String?
+  createdAt  DateTime @default(now())
 
   link Link @relation(fields: [linkId], references: [id])
+
+  @@index([linkId])
 }
