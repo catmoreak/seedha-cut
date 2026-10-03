@@ -58,8 +58,14 @@ export default function DashboardPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const storedLinks = JSON.parse(localStorage.getItem("links") || "[]");
-    setLinks(storedLinks);
+    const storedLinks: LinkItem[] = JSON.parse(localStorage.getItem("links") || "[]");
+    const repaired = storedLinks.map((link) =>
+      /^https?:\/\//.test(link.shortUrl)
+        ? link
+        : { ...link, shortUrl: `${window.location.origin}/${link.shortUrl.split("/").pop()}` }
+    );
+    localStorage.setItem("links", JSON.stringify(repaired));
+    setLinks(repaired);
     setIsLoading(false);
   }, []);
 
@@ -209,7 +215,7 @@ export default function DashboardPage() {
                     </p>
 
                     <p className="break-all mb-4 text-sm">
-                      {link.originalUrl}
+                      {link.originalUrl ?? "—"}
                     </p>
 
                     <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">

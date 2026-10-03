@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import LetterGlitch from "@/app/components/LetterGlitch";
 import BackButton from "@/app/components/BackButton";
 import PageFooter from "@/app/components/PageFooter";
+import LocalTime from "@/app/components/LocalTime";
 
 export const dynamic = "force-dynamic";
 
@@ -60,8 +61,8 @@ export default async function AnalyticsPage({ params }: PageProps) {
             <p className="text-gray-400 text-sm break-all">Original URL: {link.originalUrl}</p>
             <div className="mt-4 flex gap-6 text-sm text-gray-300">
               <div>Total Clicks: <span className="font-semibold text-white">{link.clicks}</span></div>
-              {link.launchAt && <div>Launch At: <span className="font-semibold text-white">{new Date(link.launchAt).toLocaleString()}</span></div>}
-              {link.expiresAt && <div>Expires At: <span className="font-semibold text-white">{new Date(link.expiresAt).toLocaleString()}</span></div>}
+              {link.launchAt && <div>Launch At: <span className="font-semibold text-white"><LocalTime value={link.launchAt} /></span></div>}
+              {link.expiresAt && <div>Expires At: <span className="font-semibold text-white"><LocalTime value={link.expiresAt} /></span></div>}
             </div>
           </div>
 
@@ -83,7 +84,7 @@ export default async function AnalyticsPage({ params }: PageProps) {
                   <tbody className="divide-y divide-white/5">
                     {link.clickRecords.map((click) => (
                       <tr key={click.id}>
-                        <td className="py-2 px-3">{new Date(click.createdAt).toLocaleString()}</td>
+                        <td className="py-2 px-3"><LocalTime value={click.createdAt} /></td>
                         <td className="py-2 px-3">{click.device ?? "Unknown"}</td>
                         <td className="py-2 px-3">{click.source ?? "Unknown"}</td>
                         <td className="py-2 px-3 truncate max-w-xs">{click.referrer ?? "Direct"}</td>

@@ -219,7 +219,7 @@ export default function Home() {
                         <div className="relative flex items-center rounded-md bg-white/[0.03] border border-white/15 focus-within:border-white/40 transition-colors">
                           <input
                             id="launchAt"
-                            type="datetime-local"
+                            type="datetime-local" 
                             value={launchAt}
                             onChange={(e) => setLaunchAt(e.target.value)}
                             className="w-full bg-transparent px-3 py-2 text-xs text-white outline-none [color-scheme:dark]"
