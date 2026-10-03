@@ -115,39 +115,40 @@ export default function Home() {
       <div className="relative z-10 flex min-h-screen flex-col">
         
         <header className="flex items-center justify-between px-6 py-4 sm:px-10 lg:px-16 border-b border-white/5 backdrop-blur-sm bg-black/10">
-          <div className="flex items-center space-x-2">
-            <span className="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-emerald-400">
-              SEEDHA CUT
+          <div className="flex items-center gap-3">
+            <span className="font-serif text-2xl font-semibold tracking-tight text-white/95">
+              Seedha Cut
             </span>
+
+
           </div>
           <NextLink
             href="/dashboard"
-            className="flex items-center space-x-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium transition-all hover:bg-white/10 hover:border-white/20"
+            className="group inline-flex h-9 items-center gap-2 rounded-md border border-white/15 bg-black/30 px-4 text-sm font-medium text-white/85 transition-colors hover:border-white/30 hover:bg-white/6 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z" />
-            </svg>
             <span>Dashboard</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-white/50 transition-transform group-hover:translate-x-0.5 group-hover:text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
           </NextLink>
         </header>
 
         <main className="flex flex-1 items-center justify-center px-6 py-16 sm:px-10 lg:px-16">
           <div className="w-full max-w-2xl">
-            <div className="space-y-8 rounded-3xl border border-white/10 bg-black/40 p-8 shadow-2xl shadow-black/60 backdrop-blur-xl sm:p-10 transition-all duration-300">
-              <div className="space-y-3">
-               
-                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
-                  Sharper links,<br />cleaner sharing.
+            <div className="space-y-8 rounded-2xl border border-white/10 bg-black/60 p-8 shadow-2xl shadow-black/60 backdrop-blur-xl sm:p-10 transition-all duration-300">
+              <div className="space-y-4 border-b border-white/10 pb-6">
+                <h1 className="font-serif text-4xl font-medium leading-tight tracking-tight text-white sm:text-5xl">
+                  Sharper links,<br />
+                  <span className="italic text-white/70">cleaner sharing.</span>
                 </h1>
-               
               </div>
          
               <form onSubmit={handleShorten} className="space-y-4">
                 <div className="space-y-2">
-                  <label htmlFor="url" className="text-xs font-semibold text-white/50 tracking-wider uppercase">
+                  <label htmlFor="url" className="text-[11px] font-medium text-white/50 tracking-[0.18em] uppercase">
                     Destination URL
                   </label>
-                  <div className="relative flex items-center rounded-xl bg-white/5 border border-white/10 focus-within:border-cyan-400/50 transition-all">
+                  <div className="relative flex items-center rounded-lg bg-white/[0.03] border border-white/15 focus-within:border-white/40 transition-colors">
                     <div className="pl-4 text-white/30">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -180,7 +181,7 @@ export default function Home() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                    <span>Advanced Customizations (Optional)</span>
+                    <span className="tracking-wide">Advanced options <span className="text-white/30">(optional)</span></span>
                   </button>
 
                 
@@ -191,10 +192,10 @@ export default function Home() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                    
                       <div className="space-y-1">
-                        <label htmlFor="customSlug" className="text-[10px] font-semibold text-white/40 tracking-wider uppercase">
-                          Custom Slug
+                        <label htmlFor="customSlug" className="text-[10px] font-medium text-white/40 tracking-[0.18em] uppercase">
+                          Custom slug
                         </label>
-                        <div className="relative flex items-center rounded-lg bg-white/5 border border-white/10 focus-within:border-cyan-400/30 transition-all">
+                        <div className="relative flex items-center rounded-md bg-white/[0.03] border border-white/15 focus-within:border-white/40 transition-colors">
                           <input
                             id="customSlug"
                             type="text"
@@ -208,10 +209,10 @@ export default function Home() {
 
                    
                       <div className="space-y-1">
-                        <label htmlFor="expiresAt" className="text-[10px] font-semibold text-white/40 tracking-wider uppercase">
-                          Expiration Date
+                        <label htmlFor="expiresAt" className="text-[10px] font-medium text-white/40 tracking-[0.18em] uppercase">
+                          Expiration date
                         </label>
-                        <div className="relative flex items-center rounded-lg bg-white/5 border border-white/10 focus-within:border-cyan-400/30 transition-all">
+                        <div className="relative flex items-center rounded-md bg-white/[0.03] border border-white/15 focus-within:border-white/40 transition-colors">
                           <input
                             id="expiresAt"
                             type="datetime-local"
@@ -239,19 +240,24 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 p-[1px] font-medium shadow-lg hover:shadow-cyan-500/25 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none transition-all duration-150"
+                  className="group w-full rounded-md border border-white bg-white text-black shadow-sm shadow-black/30 transition-colors duration-150 hover:bg-neutral-200 hover:border-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:opacity-60 disabled:pointer-events-none"
                 >
-                  <div className="flex h-12 w-full items-center justify-center rounded-xl bg-[#09090b] transition-all hover:bg-transparent">
+                  <div className="flex h-11 w-full items-center justify-center gap-2">
                     {loading ? (
-                      <span className="flex items-center space-x-2">
-                        <svg className="animate-spin h-4 w-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-black/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                         </svg>
-                        <span className="text-sm font-semibold tracking-wide">Processing...</span>
-                      </span>
+                        <span className="text-sm font-medium">Shortening...</span>
+                      </>
                     ) : (
-                      <span className="text-sm font-semibold tracking-wide text-white">Shorten URL</span>
+                      <>
+                        <span className="text-sm font-medium">Shorten URL</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </>
                     )}
                   </div>
                 </button>
