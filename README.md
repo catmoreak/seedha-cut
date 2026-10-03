@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Seedha Cut
 
-## Getting Started
+Seedha Cut is a privacy friendly  URL shortener without any bloatwares. You paste a long link and get a short one back. You can also see how many people clicked it and their respective analytics. The project is open source and free to use.
 
-First, run the development server:
+## Features the project has:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Shorten any link.** Paste an http or https URL and get a short 6-character link.
+- **Custom slug.** Pick your own short name, like `yoursite.com/my-link`.
+- **Launch date.** The link only starts working after a time you set. Before that, visitors see a "Not live yet" page.
+- **Expiry date.** The link stops working after a time you set.
+- **Dashboard.** See all the links you've made, open them, or check their analytics.
+- **Delete links.** Remove a link from your list only, or delete it for good, along with its click data.
+- **Click analytics.** See the total clicks  with date, device (mobile or desktop), source (Chrome, Instagram, WhatsApp, etc.) and referrer.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How it works
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. When you shorten a link, the app saves it in a PostgreSQL database with a short code.
+2. When someone opens the short link, the app looks up the code. It checks the launch and expiry dates, records the click, and then redirects them to the original URL.
+3. Your dashboard list is kept in your browser's localStorage, so there's no login. The list only shows links made from that browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Tech stack
 
-To learn more about Next.js, take a look at the following resources:
+Next.js, Tailwind CSS, Prisma ORM  and PostgreSQL.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Running it locally
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Install the dependencies:
 
-## Deploy on Vercel
+   npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Create a `.env` file with your Postgres connection string:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   DATABASE_URL=postgresql://user:password@host_psotgresssql
+   NEXT_PUBLIC_BASE_URL=http://localhost:3000   
+
+3. Set up the database tables:
+
+   npx prisma migrate deploy
+
+4. Start the app:
+
+   npm run dev
+
+Then open http://localhost:3000.
