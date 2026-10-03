@@ -8,6 +8,7 @@ import PageFooter from "./components/PageFooter";
 export default function Home() {
   const [url, setUrl] = useState("");
   const [customSlug, setCustomSlug] = useState("");
+  const [launchAt, setLaunchAt] = useState("");
   const [expiresAt, setExpiresAt] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -50,8 +51,10 @@ export default function Home() {
         },
         body: JSON.stringify({
           url: formattedUrl,
-          customSlug: customSlug || undefined,
-          expiresAt: expiresAt || undefined,
+          customAlias: customSlug || undefined,
+       
+          launchAt: launchAt ? new Date(launchAt).toISOString() : undefined,
+          expiresAt: expiresAt ? new Date(expiresAt).toISOString() : undefined,
         }),
       });
 
@@ -77,6 +80,7 @@ export default function Home() {
      
       setUrl("");
       setCustomSlug("");
+      setLaunchAt("");
       setExpiresAt("");
       setShowAdvanced(false);
     } catch (err: any) {
@@ -186,12 +190,12 @@ export default function Home() {
 
                 
                   <div
-                    className={`grid gap-4 overflow-hidden transition-all duration-300 ease-in-out ${showAdvanced ? "mt-4 opacity-100 max-h-48" : "max-h-0 opacity-0 pointer-events-none"
+                    className={`grid gap-4 overflow-hidden transition-all duration-300 ease-in-out ${showAdvanced ? "mt-4 opacity-100 max-h-96" : "max-h-0 opacity-0 pointer-events-none"
                       }`}
                   >
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                    
-                      <div className="space-y-1">
+                      <div className="space-y-1 sm:col-span-2">
                         <label htmlFor="customSlug" className="text-[10px] font-medium text-white/40 tracking-[0.18em] uppercase">
                           Custom slug
                         </label>
@@ -203,6 +207,22 @@ export default function Home() {
                             onChange={(e) => setCustomSlug(e.target.value)}
                             placeholder="e.g. linkshort"
                             className="w-full bg-transparent px-3 py-2.5 text-xs text-white placeholder-white/30 outline-none"
+                          />
+                        </div>
+                      </div>
+
+                   
+                      <div className="space-y-1">
+                        <label htmlFor="launchAt" className="text-[10px] font-medium text-white/40 tracking-[0.18em] uppercase">
+                          Launch date
+                        </label>
+                        <div className="relative flex items-center rounded-md bg-white/[0.03] border border-white/15 focus-within:border-white/40 transition-colors">
+                          <input
+                            id="launchAt"
+                            type="datetime-local"
+                            value={launchAt}
+                            onChange={(e) => setLaunchAt(e.target.value)}
+                            className="w-full bg-transparent px-3 py-2 text-xs text-white outline-none [color-scheme:dark]"
                           />
                         </div>
                       </div>
