@@ -15,7 +15,6 @@ export async function DELETE(_request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Link not found" }, { status: 404 });
     }
 
-    // Click rows reference the link with ON DELETE RESTRICT, so remove them first
     await prisma.$transaction([
       prisma.click.deleteMany({ where: { linkId: link.id } }),
       prisma.link.delete({ where: { id: link.id } }),

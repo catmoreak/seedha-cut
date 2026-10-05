@@ -98,7 +98,6 @@ export async function POST(request: Request) {
       },
     });
 
-    // Fall back to the host the request came in on when no base URL is configured
     const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || new URL(request.url).origin).replace(/\/+$/, "");
 
     return NextResponse.json({

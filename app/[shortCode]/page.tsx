@@ -37,27 +37,6 @@ function parseSource(ua: string): string {
   return "Unknown";
 }
 
-/**
- * Returns true for automated preview/crawler requests that should NOT
- * be counted as real clicks.
- *
- * Matched agents (all are headless bots, not human in-app browsers):
- *   facebookexternalhit — Meta's OG preview scraper (FB / IG / Messenger)
- *   Facebot             — legacy Meta alias
- *   meta-externalagent  — newer Meta crawl agent
- *   Meta-WebIndexer     — Meta AI indexer
- *   WhatsApp/<version>  — WhatsApp link-preview fetcher
- *                         (real WA users have a full Mozilla/5.0 UA)
- *   Twitterbot          — Twitter/X card preview
- *   Slackbot            — Slack unfurl bot
- *   LinkedInBot         — LinkedIn preview
- *   TelegramBot         — Telegram preview
- *   Googlebot           — Google crawler
- *   bingbot             — Bing crawler
- *   DuckDuckBot         — DuckDuckGo crawler
- *   ia_archiver         — Internet Archive
- *   Applebot            — Apple Siri previews
- */
 function isCrawler(ua: string): boolean {
   return /bot|crawler|spider|preview|facebookexternalhit|Facebot|meta-externalagent|Meta-WebIndexer|WhatsApp\/\d|Twitterbot|Slackbot|LinkedInBot|TelegramBot|Googlebot|bingbot|DuckDuckBot|ia_archiver|Applebot/i.test(ua);
 }
