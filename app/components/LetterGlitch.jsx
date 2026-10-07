@@ -13,6 +13,24 @@ export default function LetterGlitch({
   smooth = true,
 }) {
   const canvasRef = useRef(null);
+  const optsRef = useRef({
+    glitchColors,
+    glitchSpeed,
+    centerVignette,
+    outerVignette,
+    smooth,
+  });
+
+  
+  useEffect(() => {
+    optsRef.current = {
+      glitchColors,
+      glitchSpeed,
+      centerVignette,
+      outerVignette,
+      smooth,
+    };
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -21,29 +39,18 @@ export default function LetterGlitch({
     const SIZE = 16;
     let animId;
     let lastTime = 0;
-    let cols, rows, grid;
+    let cols = 0;
+    let rows = 0;
+    let grid = [];
 
     const rChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
-    const rColor = () =>
-      glitchColors[Math.floor(Math.random() * glitchColors.length)];
-
-    const init = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      cols = Math.ceil(canvas.width / SIZE);
-      rows = Math.ceil(canvas.height / SIZE);
-      grid = Array.from({ length: rows }, () =>
-        Array.from({ length: cols }, () => ({
-          char: rChar(),
-          color: rColor(),
-        }))
-      );
-    };
-
-    const draw = (ts) => {
-      animId = requestAnimationFrame(draw);
-      if (ts - lastTime < glitchSpeed) return;
-      lastTime = ts;
+    const rColor = () => {
+      const colors = optsRef.current.glitchColors;
+      return colors[Math.floor(Math.random() * colors.length)];
+    }; 
+    const render = () => {
+      if (!rows || !cols) return;
+      const { outerVignette: outer, centerVignette: center } = optsRef.current;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${SIZE}px monospace`;
@@ -51,17 +58,12 @@ export default function LetterGlitch({
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const cell = grid[r][c];
-       
-          if (!smooth || Math.random() < 0.03) {
-            cell.char = rChar();
-            cell.color = rColor();
-          }
           ctx.fillStyle = cell.color;
           ctx.fillText(cell.char, c * SIZE, (r + 1) * SIZE);
         }
       }
 
-      if (outerVignette) {
+      if (outer) {
         const r = Math.max(canvas.width, canvas.height);
         const g = ctx.createRadialGradient(
           canvas.width / 2, canvas.height / 2, r * 0.2,
@@ -73,7 +75,7 @@ export default function LetterGlitch({
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
 
-      if (centerVignette) {
+      if (center) {
         const r = Math.max(canvas.width, canvas.height);
         const g = ctx.createRadialGradient(
           canvas.width / 2, canvas.height / 2, 0,
@@ -86,11 +88,58 @@ export default function LetterGlitch({
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
     };
-
-    init();
-
+    const resize = () => {
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      if (!w || !h) return;
     
-    const ro = new ResizeObserver(init);
+      if (canvas.width === w && canvas.height === h) return;
+
+      
+      canvas.width = w;
+      canvas.height = h;
+
+      const nextCols = Math.ceil(w / SIZE);
+      const nextRows = Math.ceil(h / SIZE);
+      
+      const prev = grid;
+      grid = Array.from({ length: nextRows }, (_, r) =>
+        Array.from(
+          { length: nextCols },
+          (_, c) =>
+            (prev[r] && prev[r][c]) || { char: rChar(), color: rColor() }
+        )
+      );
+      cols = nextCols;
+      rows = nextRows;
+
+      
+      render();
+    };
+
+    const draw = (ts) => {
+      animId = requestAnimationFrame(draw);
+      const { glitchSpeed: speed, smooth: isSmooth } = optsRef.current;
+      if (ts - lastTime < speed) return;
+      lastTime = ts;
+      if (!rows || !cols) return;
+
+      
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (!isSmooth || Math.random() < 0.03) {
+            const cell = grid[r][c];
+            cell.char = rChar();
+            cell.color = rColor();
+          }
+        }
+      }
+
+      render();
+    };
+
+    resize();
+const ro = new ResizeObserver(resize);
     ro.observe(canvas);
 
     animId = requestAnimationFrame(draw);
@@ -98,8 +147,8 @@ export default function LetterGlitch({
     return () => {
       cancelAnimationFrame(animId);
       ro.disconnect();
-    };
-  }, [glitchColors, glitchSpeed, centerVignette, outerVignette, smooth]);
+    }; 
+  }, []);
 
   return (
     <canvas
